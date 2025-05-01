@@ -3,39 +3,42 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import numpy as np
 
-# Configura el acceso a Google Sheets
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-import json
-creds_dict = st.secrets["google_sheets"]
-creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+# 1. Cargar credenciales del panel de secrets
+scope = [
+    "https://spreadsheets.google.com/feeds",
+    "https://www.googleapis.com/auth/drive"
+]
+creds = ServiceAccountCredentials.from_json_keyfile_dict(
+    st.secrets["google_sheets"], scope
+)
 client = gspread.authorize(creds)
-sheet = client.open("streamlit-eva").sheet1
+sheet = client.open("streamlit-eva").sheet1   # cámbialo si tu hoja se llama distinto
 
-# Función para convertir EVA a color
-def eva_to_color(eva):
+# 2. Conversión EVA→color
+def eva_to_color(eva: float) -> str:
     r = int(255 * (1 - eva / 10))
     g = int(255 * (eva / 10))
     return f"rgb({r},{g},0)"
 
-# Interfaz
+# 3. Interfaz
 st.title("Evaluación EVA")
 eva = st.slider("Indica tu nivel EVA (0-10)", 0, 10, 5)
 if st.button("Enviar puntuación"):
     sheet.append_row([eva])
     st.success("Puntuación enviada correctamente")
 
-# Cálculo de media
-values = sheet.col_values(1)[1:]  # evita el encabezado si lo tienes
-eva_values = [float(v) for v in values if v]
-if eva_values:
-    media = np.mean(eva_values)
+# 4. Mostrar media global
+valores = sheet.col_values(1)
+eva_vals = [float(v) for v in valores if v]   # evita celdas vacías
+if eva_vals:
+    media = np.mean(eva_vals)
     color = eva_to_color(media)
     st.markdown(
-        f"<div style='background-color:{color}; padding:30px; text-align:center; color:white; font-size:30px;'>"
+        f"<div style='background:{color};padding:30px;text-align:center;"
+        f"color:white;font-size:30px;border-radius:8px;'>"
         f"Media EVA: {media:.2f}"
         f"</div>",
         unsafe_allow_html=True
     )
 else:
     st.info("Aún no hay puntuaciones registradas.")
-
