@@ -12,7 +12,7 @@ creds = ServiceAccountCredentials.from_json_keyfile_dict(
     st.secrets["google_sheets"], scope
 )
 client = gspread.authorize(creds)
-sheet = client.open("streamlit-eva").sheet1   # cámbialo si tu hoja se llama distinto
+sheet = client.open("hoja-analisis-emociones").sheet1   # cámbialo si tu hoja se llama distinto
 
 # 2. Conversión EVA→color
 def eva_to_color(eva: float) -> str:
