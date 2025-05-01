@@ -9,7 +9,7 @@ import json
 creds_dict = st.secrets["google_sheets"]
 creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
-sheet = client.open("eva_responses").sheet1
+sheet = client.open("streamlit-eva").sheet1
 
 # Función para convertir EVA a color
 def eva_to_color(eva):
