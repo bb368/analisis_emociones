@@ -5,7 +5,9 @@ import numpy as np
 
 # Configura el acceso a Google Sheets
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("tu_credencial.json", scope)
+import json
+creds_dict = st.secrets["google_sheets"]
+creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
 sheet = client.open("eva_responses").sheet1
 
