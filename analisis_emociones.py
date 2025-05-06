@@ -24,7 +24,7 @@ def eva_to_color(eva: float) -> str:
 # 3. Interfaz
 st.title("¿Cómo te sientes hoy?")
 usuario = st.text_input("Tu nombre o alias :)")
-eva = st.slider("Puntúa cómo te sientes (0‑10)", 0, 10, 5)
+eva = st.slider("Puntúa cómo te sientes hoy (0‑10)", 0, 10, 5)
 
 if st.button("Enviar puntuación"):
     if usuario.strip() == "":
