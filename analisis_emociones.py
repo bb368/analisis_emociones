@@ -56,7 +56,7 @@ if data:                                    # hay registros
                 f"<div style='background:{eva_to_color(media_user)};"
                 f"padding:30px;text-align:center;color:white;"
                 f"font-size:24px;border-radius:8px;'>"
-                f"Tu media EVA<br><b>{media_user:.2f}</b>"
+                f"Tu puntuacion media<br><b>{media_user:.2f}</b>"
                 f"</div>",
                 unsafe_allow_html=True
             )
@@ -70,7 +70,7 @@ if data:                                    # hay registros
             f"<div style='background:{eva_to_color(media_global)};"
             f"padding:30px;text-align:center;color:white;"
             f"font-size:24px;border-radius:8px;'>"
-            f"Media global EVA<br><b>{media_global:.2f}</b>"
+            f"Puntuación media en hospital<br><b>{media_global:.2f}</b>"
             f"</div>",
             unsafe_allow_html=True
         )
